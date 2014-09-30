@@ -15,6 +15,12 @@
 - (void)onEnter
 {
     [super onEnter];
+    
+    // Load Day Number
+    self.dayNumber = [[[NSUserDefaults standardUserDefaults] valueForKey:@"DayNumber"] intValue];
+    
+    // Set Day # Label
+    self.dayLabel.string = [NSString stringWithFormat:@"DAY %i",self.dayNumber];
 }
 
 - (void)onExit

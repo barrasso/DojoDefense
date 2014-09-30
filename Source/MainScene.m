@@ -32,6 +32,9 @@
 {
     // Start new game
     
+    // Set the saved DayNumber to 0
+    [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"DayNumber"];
+    
     // Load into transition scene
     CCScene *loadDay = [CCBReader loadAsScene:@"DayScene"];
     [[CCDirector sharedDirector] replaceScene:loadDay];

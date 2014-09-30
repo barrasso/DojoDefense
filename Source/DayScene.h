@@ -13,4 +13,7 @@
 // Day Label
 @property (strong, nonatomic) CCLabelTTF *dayLabel;
 
+// Day Number
+@property (assign, nonatomic) int dayNumber;
+
 @end
