@@ -31,6 +31,10 @@
 - (void)newGameSelected
 {
     // Start new game
+    
+    // Load into transition scene
+    CCScene *loadDay = [CCBReader loadAsScene:@"DayScene"];
+    [[CCDirector sharedDirector] replaceScene:loadDay];
 }
 
 @end

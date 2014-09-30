@@ -821,7 +821,7 @@ void FNTConfigRemoveCache( void )
 				 But this code is super fast. It doesn't create any sprite.
 				 Ideal for big labels.
 				 */
-				fontChar = _reusedChar;
+			//	fontChar = _reusedChar;  // Code will never be executed
 				hasSprite = NO;
 			} else {
 				fontChar = [[CCSprite alloc] initWithTexture:self.texture rect:rect];
