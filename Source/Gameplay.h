@@ -10,4 +10,7 @@
 
 @interface Gameplay : CCNode <CCPhysicsCollisionDelegate>
 
+// Day Number
+@property (assign, nonatomic) int dayNumber;
+
 @end

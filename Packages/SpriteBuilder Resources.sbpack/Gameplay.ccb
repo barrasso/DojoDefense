@@ -821,9 +821,9 @@
 							<key>dynamic</key>
 							<false/>
 							<key>elasticity</key>
-							<real>0.30000001192092896</real>
+							<real>0.10000000149011612</real>
 							<key>friction</key>
-							<real>0.30000001192092896</real>
+							<real>0.10000000149011612</real>
 							<key>points</key>
 							<array>
 								<array>
@@ -977,9 +977,9 @@
 							<key>dynamic</key>
 							<false/>
 							<key>elasticity</key>
-							<real>0.30000001192092896</real>
+							<real>0.0</real>
 							<key>friction</key>
-							<real>0.30000001192092896</real>
+							<real>0.5</real>
 							<key>points</key>
 							<array>
 								<array>
@@ -1161,11 +1161,11 @@
 					</dict>
 				</array>
 				<key>customClass</key>
-				<string>_physicsNode</string>
+				<string></string>
 				<key>displayName</key>
 				<string>CCPhysicsNode</string>
 				<key>memberVarAssignmentName</key>
-				<string></string>
+				<string>_physicsNode</string>
 				<key>memberVarAssignmentType</key>
 				<integer>1</integer>
 				<key>properties</key>

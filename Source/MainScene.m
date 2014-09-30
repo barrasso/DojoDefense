@@ -1,9 +1,9 @@
 //
 //  MainScene.m
-//  PROJECTNAME
+//  Dojo Defense
 //
-//  Created by Viktor on 10/10/13.
-//  Copyright (c) 2013 Apportable. All rights reserved.
+//  Created by Mark on 9/29/14.
+//  Copyright (c) 2013 Mark Barrasso. All rights reserved.
 //
 
 #import "MainScene.h"
