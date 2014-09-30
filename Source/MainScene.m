@@ -32,7 +32,7 @@
 {
     // Start new game
     
-    // Set the saved DayNumber to 0
+    // Set the saved DayNumber to 1
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"DayNumber"];
     
     // Load into transition scene
