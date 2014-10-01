@@ -10,10 +10,13 @@
 #import "FootNinja.h"
 
 // First Ninja's X Position
-static const CGFloat firstNinjasXPosition = -50.f;
+static const CGFloat firstNinjasXPosition = -75.f;
 
 // Distance between Ninjas
 static const CGFloat distanceBetweenNinjas = 20.f;
+
+// Day Speed constant (increases with day #)
+static const CGFloat daySpeedConstant = 1.0f;
 
 @implementation Gameplay
 {
@@ -58,9 +61,8 @@ static const CGFloat distanceBetweenNinjas = 20.f;
     self.dayNumber = [[[NSUserDefaults standardUserDefaults] objectForKey:@"DayNumber"] intValue];
     
     // Set collision types
-    self.physicsBody.collisionType = @"tower";
-    self.physicsBody.collisionType = @"floor";
-    self.physicsBody.collisionType = @"footninja";
+    _tower.physicsBody.collisionType = @"tower";
+    _floor.physicsBody.collisionType = @"floor";
     
     // Init enemy arrays
     _allNinjas = [[NSMutableArray alloc] init];
@@ -96,14 +98,21 @@ static const CGFloat distanceBetweenNinjas = 20.f;
     // Set ninja position
     footNinja.position = ccp(previousNinjasXPosition + distanceBetweenNinjas, (screenSize.height * .20f));
     
-    // Apply for to ninja
-    [footNinja.physicsBody applyForce:ccp(2000.f, 0)];
+    // Apply velocity to ninja
+    footNinja.physicsBody.velocity = ccp(40.f*daySpeedConstant, 0.f);
     
     // Add footninja to physics node
     [_physicsNode addChild:footNinja];
     
     // Add footninja to allNinjas array
     [_allNinjas addObject:footNinja];
+}
+
+#pragma mark - Collision Methods
+
+- (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair footninja:(CCNode *)nodeA tower:(CCNode *)nodeB
+{
+    
 }
 
 @end

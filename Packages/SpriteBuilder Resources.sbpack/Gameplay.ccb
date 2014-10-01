@@ -979,7 +979,7 @@
 							<key>elasticity</key>
 							<real>0.0</real>
 							<key>friction</key>
-							<real>0.5</real>
+							<real>1</real>
 							<key>points</key>
 							<array>
 								<array>

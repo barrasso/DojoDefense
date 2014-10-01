@@ -154,6 +154,13 @@
 			name = Enemies;
 			sourceTree = "<group>";
 		};
+		0406938019DCA4B60018FE21 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Objects;
+			sourceTree = "<group>";
+		};
 		9222E2B918734FF800A246C7 /* libs */ = {
 			isa = PBXGroup;
 			children = (
@@ -168,6 +175,7 @@
 				0406936B19DA0BDE0018FE21 /* Delegate */,
 				0406937819DB50250018FE21 /* Enemies */,
 				0406936D19DA0BEA0018FE21 /* Scenes */,
+				0406938019DCA4B60018FE21 /* Objects */,
 			);
 			name = Source;
 			sourceTree = "<group>";
