@@ -42,8 +42,8 @@ static const CGFloat distanceBetweenNinjas = 20.f;
 {
     [super onEnter];
     
-    // debug physics
-    _physicsNode.debugDraw = YES;
+    // Enable to debug physics
+    //_physicsNode.debugDraw = YES;
     
     // Enable touches
     self.userInteractionEnabled = YES;
@@ -67,39 +67,8 @@ static const CGFloat distanceBetweenNinjas = 20.f;
     // Get day number from NSUser Defaults
     self.dayNumber = [[[NSUserDefaults standardUserDefaults] objectForKey:@"DayNumber"] intValue];
     
-    // Figure out speed constant, and enemy type based on day number
-    switch (self.dayNumber)
-    {
-        // Day Number
-        case 1:
-            // Day 1 Speed Constant
-            daySpeedConstant = 1.0f;
-            
-            // Spawn new ninja
-            [self spawnNewNinja];
-            
-            // End Case
-            break;
-            
-        case 2:
-            // Day 2 Speed Constant
-            daySpeedConstant = 1.05f;
-            
-            // End Case
-            break;
-            
-        case 3:
-            // Day 3 Speed Constant
-            daySpeedConstant = 1.1f;
-            
-            // End Case
-            break;
-            
-        default:
-            // Default to 100%
-            daySpeedConstant = 1.0f;
-            break;
-    }
+    // Load game mechanics based on day number
+    [self loadGameMechanics];
 }
 
 - (void)onExit
@@ -141,9 +110,49 @@ static const CGFloat distanceBetweenNinjas = 20.f;
 
 #pragma mark - Collision Methods
 
+// Collision between FOOTNINJA and TOWER
 - (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair footninja:(CCNode *)nodeA tower:(CCNode *)nodeB
 {
     
+}
+
+#pragma mark - Helper Methods
+
+- (void)loadGameMechanics
+{
+    // Figure out speed constant and enemy type based on day number
+    switch (self.dayNumber)
+    {
+            // Day Number
+        case 1:
+            // Day 1 Speed Constant
+            daySpeedConstant = 1.0f;
+            
+            // Spawn new ninja
+            [self spawnNewNinja];
+            
+            // End Case
+            break;
+            
+        case 2:
+            // Day 2 Speed Constant
+            daySpeedConstant = 1.05f;
+            
+            // End Case
+            break;
+            
+        case 3:
+            // Day 3 Speed Constant
+            daySpeedConstant = 1.1f;
+            
+            // End Case
+            break;
+            
+        default:
+            // Default to 100%
+            daySpeedConstant = 1.0f;
+            break;
+    }
 }
 
 @end
