@@ -29,6 +29,9 @@ static const CGFloat distanceBetweenNinjas = 20.f;
     // Screen Size
     CGSize screenSize;
     
+    // Touch Coordinates
+    CGPoint touchLocation;
+    
     // Init speed constant
     CGFloat daySpeedConstant;
     
@@ -77,6 +80,23 @@ static const CGFloat distanceBetweenNinjas = 20.f;
     [super onExit];
 }
 
+#pragma mark - Update method
+- (void)update:(CCTime)delta
+{
+    // Check if user touch location is in bounding box of enemy
+//    if (touchLocation) {
+//        
+//    }
+}
+
+#pragma mark - Touch Handling
+
+- (void)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event
+{
+    // Get user touch location
+    touchLocation = [touch locationInNode:self];
+}
+
 #pragma mark - Enemy Methods
 
 - (void)spawnNewNinja
@@ -113,7 +133,8 @@ static const CGFloat distanceBetweenNinjas = 20.f;
 // Collision between FOOTNINJA and TOWER
 - (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair footninja:(CCNode *)nodeA tower:(CCNode *)nodeB
 {
-    
+    // Get kinetic energy of collision
+   // float kineticEnergy = [pair totalKineticEnergy];
 }
 
 #pragma mark - Helper Methods
@@ -123,7 +144,7 @@ static const CGFloat distanceBetweenNinjas = 20.f;
     // Figure out speed constant and enemy type based on day number
     switch (self.dayNumber)
     {
-            // Day Number
+        // Day 1
         case 1:
             // Day 1 Speed Constant
             daySpeedConstant = 1.0f;
@@ -133,24 +154,26 @@ static const CGFloat distanceBetweenNinjas = 20.f;
             
             // End Case
             break;
-            
+        // Day 2
         case 2:
             // Day 2 Speed Constant
             daySpeedConstant = 1.05f;
             
             // End Case
             break;
-            
+        // Day 3
         case 3:
             // Day 3 Speed Constant
             daySpeedConstant = 1.1f;
             
             // End Case
             break;
-            
+        // Default
         default:
             // Default to 100%
             daySpeedConstant = 1.0f;
+            
+            // End case
             break;
     }
 }
