@@ -15,9 +15,6 @@ static const CGFloat firstNinjasXPosition = -75.f;
 // Distance between Ninjas
 static const CGFloat distanceBetweenNinjas = 20.f;
 
-// Day Speed constant (increases with day #)
-static const CGFloat daySpeedConstant = 1.0f;
-
 @implementation Gameplay
 {
     // Physics Node
@@ -31,6 +28,9 @@ static const CGFloat daySpeedConstant = 1.0f;
     
     // Screen Size
     CGSize screenSize;
+    
+    // Init speed constant
+    CGFloat daySpeedConstant;
     
     // Enemy arrays
     NSMutableArray *_allNinjas;
@@ -59,6 +59,26 @@ static const CGFloat daySpeedConstant = 1.0f;
     
     // Get day number from NSUser Defaults
     self.dayNumber = [[[NSUserDefaults standardUserDefaults] objectForKey:@"DayNumber"] intValue];
+    
+    // Figure out speed constant based on day number
+    switch (self.dayNumber)
+    {
+        // Day Number
+        case 1:
+            // Day Speed Constant
+            daySpeedConstant = 1.0f;
+            break;
+        case 2:
+            daySpeedConstant = 1.05f;
+            break;
+        case 3:
+            daySpeedConstant = 1.1f;
+            break;
+        default:
+            // Default to 100%
+            daySpeedConstant = 1.0f;
+            break;
+    }
     
     // Set collision types
     _tower.physicsBody.collisionType = @"tower";
