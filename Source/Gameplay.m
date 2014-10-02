@@ -57,29 +57,6 @@ static const CGFloat distanceBetweenNinjas = 20.f;
     // Set contentsize to normalized
     self.contentSizeType = CCSizeTypeNormalized;
     
-    // Get day number from NSUser Defaults
-    self.dayNumber = [[[NSUserDefaults standardUserDefaults] objectForKey:@"DayNumber"] intValue];
-    
-    // Figure out speed constant based on day number
-    switch (self.dayNumber)
-    {
-        // Day Number
-        case 1:
-            // Day Speed Constant
-            daySpeedConstant = 1.0f;
-            break;
-        case 2:
-            daySpeedConstant = 1.05f;
-            break;
-        case 3:
-            daySpeedConstant = 1.1f;
-            break;
-        default:
-            // Default to 100%
-            daySpeedConstant = 1.0f;
-            break;
-    }
-    
     // Set collision types
     _tower.physicsBody.collisionType = @"tower";
     _floor.physicsBody.collisionType = @"floor";
@@ -87,8 +64,42 @@ static const CGFloat distanceBetweenNinjas = 20.f;
     // Init enemy arrays
     _allNinjas = [[NSMutableArray alloc] init];
     
-    // Spawn new ninja
-    [self spawnNewNinja];
+    // Get day number from NSUser Defaults
+    self.dayNumber = [[[NSUserDefaults standardUserDefaults] objectForKey:@"DayNumber"] intValue];
+    
+    // Figure out speed constant, and enemy type based on day number
+    switch (self.dayNumber)
+    {
+        // Day Number
+        case 1:
+            // Day 1 Speed Constant
+            daySpeedConstant = 1.0f;
+            
+            // Spawn new ninja
+            [self spawnNewNinja];
+            
+            // End Case
+            break;
+            
+        case 2:
+            // Day 2 Speed Constant
+            daySpeedConstant = 1.05f;
+            
+            // End Case
+            break;
+            
+        case 3:
+            // Day 3 Speed Constant
+            daySpeedConstant = 1.1f;
+            
+            // End Case
+            break;
+            
+        default:
+            // Default to 100%
+            daySpeedConstant = 1.0f;
+            break;
+    }
 }
 
 - (void)onExit
