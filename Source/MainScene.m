@@ -30,6 +30,8 @@
 
 - (void)newGameSelected
 {
+    // Prompt user is they are sure
+    
     // Start new game
     
     // Set the saved DayNumber to 1

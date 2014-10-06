@@ -83,10 +83,7 @@ static const CGFloat distanceBetweenNinjas = 20.f;
 #pragma mark - Update method
 - (void)update:(CCTime)delta
 {
-    // Check if user touch location is in bounding box of enemy
-//    if (touchLocation) {
-//        
-//    }
+    
 }
 
 #pragma mark - Touch Handling
