@@ -18,7 +18,7 @@
     self.physicsBody.collisionType = @"footninja";
     
     // Set constant velocity
-    self.constantVelocity = ccp(40.f, 0.f);
+    self.constantVelocity = ccp(30.f, 0.f);
 }
 
 @end

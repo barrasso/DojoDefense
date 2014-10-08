@@ -55,7 +55,6 @@ static const CGFloat distanceBetweenNinjas = 20.f;
         // Enable multi touch
         self.multipleTouchEnabled = YES;
     }
-    
     return self;
 }
 
@@ -66,7 +65,7 @@ static const CGFloat distanceBetweenNinjas = 20.f;
     [super onEnter];
     
     // Init grab variable
-    _grab = [[ChipmunkMultiGrab alloc] initForSpace:_physicsNode.space withSmoothing:powf(0.1f, 15.0f) withGrabForce:1e5];
+    _grab = [[ChipmunkMultiGrab alloc] initForSpace:_physicsNode.space withSmoothing:powf(0.1f, 10.0f) withGrabForce:1e4];
     
     // Enable to debug physics
     //_physicsNode.debugDraw = YES;
