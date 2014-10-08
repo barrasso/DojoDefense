@@ -10,7 +10,10 @@
 
 @interface FootNinja : CCNode
 
-// Did Load
+// Foot Ninja constant velocity
+@property (assign) CGPoint constantVelocity;
+
+// Did Load Method
 - (void)didLoadFromCCB;
 
 @end

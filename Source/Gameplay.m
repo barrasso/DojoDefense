@@ -104,7 +104,7 @@ static const CGFloat distanceBetweenNinjas = 20.f;
 
 - (void)update:(CCTime)delta
 {
-    CCLOG(@"TouchLocation: %f, %f",touchLocation.x,touchLocation.y);
+   // CCLOG(@"TouchLocation: %f, %f",touchLocation.x,touchLocation.y);
 }
 
 #pragma mark - Touch Handling
@@ -158,7 +158,7 @@ static const CGFloat distanceBetweenNinjas = 20.f;
     footNinja.position = ccp(previousNinjasXPosition + distanceBetweenNinjas, (screenSize.height * .20f));
     
     // Apply velocity to ninja
-    footNinja.physicsBody.velocity = ccp(40.f*daySpeedConstant, 0.f);
+    footNinja.physicsBody.velocity = ccp((footNinja.constantVelocity.x * daySpeedConstant), 0.f);
     
     // Add footninja to physics node
     [_physicsNode addChild:footNinja];
