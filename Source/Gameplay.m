@@ -7,6 +7,7 @@
 //
 
 #import "Gameplay.h"
+#import "CCPhysics+ObjectiveChipmunk.h"
 #import "FootNinja.h"
 
 // First Ninja's X Position
@@ -17,6 +18,9 @@ static const CGFloat distanceBetweenNinjas = 20.f;
 
 @implementation Gameplay
 {
+    // Multi grab
+    ChipmunkMultiGrab *_grab;
+    
     // Physics Node
     CCPhysicsNode *_physicsNode;
     
@@ -39,17 +43,33 @@ static const CGFloat distanceBetweenNinjas = 20.f;
     NSMutableArray *_allNinjas;
 }
 
+#pragma mark - Initialization
+
+- (id)init
+{
+    if ((self = [super init]))
+    {
+        // Enable touches
+        self.userInteractionEnabled = YES;
+        
+        // Enable multi touch
+        self.multipleTouchEnabled = YES;
+    }
+    
+    return self;
+}
+
 #pragma mark - Lifecycle
 
 - (void)onEnter
 {
     [super onEnter];
     
+    // Init grab variable
+    _grab = [[ChipmunkMultiGrab alloc] initForSpace:_physicsNode.space withSmoothing:powf(0.1f, 15.0f) withGrabForce:1e5];
+    
     // Enable to debug physics
     //_physicsNode.debugDraw = YES;
-    
-    // Enable touches
-    self.userInteractionEnabled = YES;
     
     // Set collision delegate
     _physicsNode.collisionDelegate = self;
@@ -81,9 +101,10 @@ static const CGFloat distanceBetweenNinjas = 20.f;
 }
 
 #pragma mark - Update method
+
 - (void)update:(CCTime)delta
 {
-    
+    CCLOG(@"TouchLocation: %f, %f",touchLocation.x,touchLocation.y);
 }
 
 #pragma mark - Touch Handling
@@ -92,6 +113,27 @@ static const CGFloat distanceBetweenNinjas = 20.f;
 {
     // Get user touch location
     touchLocation = [touch locationInNode:self];
+    
+    // Get the beginning location of the grab
+    [_grab beginLocation:[touch locationInNode:self]];
+}
+
+- (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
+{
+    // Update the location of the grab
+    [_grab updateLocation:[touch locationInNode:self]];
+}
+
+- (void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event
+{
+    // Get the ending location of the grab
+    [_grab endLocation:[touch locationInNode:self]];
+}
+
+- (void)touchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
+{
+    // Call the touch ended event
+    [self touchEnded:touch withEvent:event];
 }
 
 #pragma mark - Enemy Methods
