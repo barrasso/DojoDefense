@@ -11,7 +11,7 @@
 #import "FootNinja.h"
 
 // First Ninja's X Position
-static const CGFloat firstNinjasXPosition = -75.f;
+static const CGFloat firstNinjasXPosition = -10.f;
 
 // Distance between Ninjas
 static const CGFloat distanceBetweenNinjas = 20.f;
