@@ -201,7 +201,6 @@ static const CGFloat distanceBetweenNinjas = 20.f;
 - (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair footninja:(CCNode *)nodeA tower:(CCNode *)nodeB
 {
     // Get kinetic energy of collision
-   // float kineticEnergy = [pair totalKineticEnergy];
 }
 
 // Collision between FOOTNINJA and FLOOR
