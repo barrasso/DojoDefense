@@ -41,6 +41,9 @@ static const CGFloat distanceBetweenNinjas = 20.f;
     
     // Enemy arrays
     NSMutableArray *_allNinjas;
+    
+    // Blood explosion array
+    NSMutableArray *_allBloodEffects;
 }
 
 #pragma mark - Initialization
@@ -166,6 +169,32 @@ static const CGFloat distanceBetweenNinjas = 20.f;
     [_allNinjas addObject:footNinja];
 }
 
+#pragma mark - Animation Events
+
+- (void)killFootNinja:(CCNode *)footNinja
+{
+    // Load the bloody effect
+    CCNode *bloodExplosion = (CCNode *)[CCBReader load:@"BloodyExplosion"];
+    
+    // Place bloody effect on enemy's position
+    bloodExplosion.positionInPoints = footNinja.positionInPoints;
+    
+    // Add bloody effect to same parent as enemy
+    [footNinja.parent addChild:bloodExplosion];
+    
+    // Add blood effect to bloodeffect array
+    [_allBloodEffects addObject:bloodExplosion];
+    
+    // Remove footninja
+    [footNinja removeFromParent];
+}
+
+- (void)clearBloodEffects
+{
+    // Clear blood effect array
+    [_allBloodEffects removeAllObjects];
+}
+
 #pragma mark - Collision Methods
 
 // Collision between FOOTNINJA and TOWER
@@ -179,6 +208,17 @@ static const CGFloat distanceBetweenNinjas = 20.f;
 - (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair footninja:(CCNode *)nodeA floor:(CCNode *)nodeB
 {
     // Get kinetic energy of collision
+    float kineticEnergy = [pair totalKineticEnergy];
+    
+    // If the kinetic energy is high enough, load ninjas death
+    if (kineticEnergy > 400000.f)
+    {
+        // Load ninja deaths
+        [self killFootNinja:nodeA];
+        
+        // Remove the bloody explosion
+        [self clearBloodEffects];
+    }
 }
 
 #pragma mark - Helper Methods

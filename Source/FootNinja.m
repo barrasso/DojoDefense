@@ -17,6 +17,9 @@
     // Set collision type
     self.physicsBody.collisionType = @"footninja";
     
+    // Set collision group
+    self.physicsBody.collisionGroup = @"enemy";
+    
     // Set constant velocity
     self.constantVelocity = ccp(30.f, 0.f);
 }
