@@ -10,12 +10,6 @@
 #import "CCPhysics+ObjectiveChipmunk.h"
 #import "FootNinja.h"
 
-// First Ninja's X Position
-static const CGFloat firstNinjasXPosition = -10.f;
-
-// Distance between Ninjas
-static const CGFloat distanceBetweenNinjas = 20.f;
-
 @implementation Gameplay
 {
     // Multi grab
@@ -29,6 +23,9 @@ static const CGFloat distanceBetweenNinjas = 20.f;
     
     // Floor Node
     CCNode *_floor;
+    
+    // User grabbing flag
+    BOOL isUserGrabbing;
     
     // Screen Size
     CGSize screenSize;
@@ -106,7 +103,21 @@ static const CGFloat distanceBetweenNinjas = 20.f;
 
 - (void)update:(CCTime)delta
 {
-   // CCLOG(@"TouchLocation: %f, %f",touchLocation.x,touchLocation.y);
+    // CCLOG(@"TouchLocation: %f, %f",touchLocation.x,touchLocation.y);
+    
+    // Loop through the ninjas array
+    for (FootNinja *footNinja in _allNinjas)
+    {
+        // If the ninjas position is above the ground
+        if (footNinja.position.y > (screenSize.height * 0.21f))
+            // Set ground flag to false
+            footNinja.isNinjaOnGround = NO;
+        
+        // If the user is not touching the ninja, and the user isn't grabbing, and the ninja is on the ground
+        if (!(CGRectContainsPoint(footNinja.boundingBox, touchLocation)) && !isUserGrabbing && footNinja.isNinjaOnGround)
+            // Apply constant velocity to ninja
+            footNinja.physicsBody.velocity = ccp((footNinja.constantVelocity.x * daySpeedConstant), footNinja.physicsBody.velocity.y);
+    }
 }
 
 #pragma mark - Touch Handling
@@ -118,49 +129,47 @@ static const CGFloat distanceBetweenNinjas = 20.f;
     
     // Get the beginning location of the grab
     [_grab beginLocation:[touch locationInNode:self]];
+    
+    // Set user grabbing bool to yes
+    isUserGrabbing = YES;
 }
 
 - (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
 {
     // Update the location of the grab
     [_grab updateLocation:[touch locationInNode:self]];
+    
+    // Set user grabbing bool to yes
+    isUserGrabbing = YES;
 }
 
 - (void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event
 {
     // Get the ending location of the grab
     [_grab endLocation:[touch locationInNode:self]];
+    
+    // Set user grabbing bool to no
+    isUserGrabbing = NO;
 }
 
 - (void)touchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
 {
     // Call the touch ended event
     [self touchEnded:touch withEvent:event];
+    
+    // Set user grabbing bool to no
+    isUserGrabbing = NO;
 }
 
 #pragma mark - Enemy Methods
 
 - (void)spawnNewNinja
 {
-    // Base new ninja position on previous
-    CCNode *previousNinja = [_allNinjas lastObject];
-    
-    // Get previous ninjas x position
-    CGFloat previousNinjasXPosition = previousNinja.position.x;
-    
-    // If previous ninja is nil
-    if (!previousNinja)
-        // Then this is the first ninja
-        previousNinjasXPosition = firstNinjasXPosition;
-    
     // Load Foot Ninja
     FootNinja *footNinja = (FootNinja *)[CCBReader load:@"FootNinja"];
     
     // Set ninja position
-    footNinja.position = ccp(previousNinjasXPosition + distanceBetweenNinjas, (screenSize.height * .20f));
-    
-    // Apply velocity to ninja
-    footNinja.physicsBody.velocity = ccp((footNinja.constantVelocity.x * daySpeedConstant), 0.f);
+    footNinja.position = ccp((screenSize.width * .01f), (screenSize.height * .20f));
     
     // Add footninja to physics node
     [_physicsNode addChild:footNinja];
@@ -169,7 +178,7 @@ static const CGFloat distanceBetweenNinjas = 20.f;
     [_allNinjas addObject:footNinja];
 }
 
-#pragma mark - Animation Events
+#pragma mark - Animation Event Methods
 
 - (void)killFootNinja:(CCNode *)footNinja
 {
@@ -206,6 +215,13 @@ static const CGFloat distanceBetweenNinjas = 20.f;
 // Collision between FOOTNINJA and FLOOR
 - (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair footninja:(CCNode *)nodeA floor:(CCNode *)nodeB
 {
+    // Loop through the ninjas array
+    for (FootNinja *footNinja in _allNinjas)
+    {
+        // Set touching ground flag to true
+        footNinja.isNinjaOnGround = YES;
+    }
+    
     // Get kinetic energy of collision
     float kineticEnergy = [pair totalKineticEnergy];
     
@@ -232,31 +248,30 @@ static const CGFloat distanceBetweenNinjas = 20.f;
             // Day 1 Speed Constant
             daySpeedConstant = 1.0f;
             
-            // Spawn new ninja
-            [self spawnNewNinja];
+            // Spawn new ninja every 4 - 6 seconds
+            [self schedule:@selector(spawnNewNinja) interval:(arc4random() % 3) + 4];
             
-            // End Case
             break;
+            
         // Day 2
         case 2:
             // Day 2 Speed Constant
             daySpeedConstant = 1.05f;
             
-            // End Case
             break;
+            
         // Day 3
         case 3:
             // Day 3 Speed Constant
             daySpeedConstant = 1.1f;
             
-            // End Case
             break;
+            
         // Default
         default:
             // Default to 100%
             daySpeedConstant = 1.0f;
             
-            // End case
             break;
     }
 }

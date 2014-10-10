@@ -13,6 +13,9 @@
 // Foot Ninja constant velocity
 @property (assign) CGPoint constantVelocity;
 
+// Grabbing boolean
+@property (assign) BOOL isNinjaOnGround;
+
 // Did Load Method
 - (void)didLoadFromCCB;
 
