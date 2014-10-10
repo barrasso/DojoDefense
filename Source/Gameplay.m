@@ -273,11 +273,7 @@
             
             break;
             
-        // Default
         default:
-            // Default to 100%
-            daySpeedConstant = 1.0f;
-            
             break;
     }
 }
