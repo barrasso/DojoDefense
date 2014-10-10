@@ -32,7 +32,7 @@
 {
     // Prompt user is they are sure
     
-    // Start new game
+    /* START NEW GAME */
     
     // Set the saved DayNumber to 1
     [[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"DayNumber"];

@@ -91,6 +91,9 @@
     
     // Load game mechanics based on day number
     [self loadGameMechanics];
+    
+    // Get dojo health from NSUser Defaults
+    self.dojoHealth = [[[NSUserDefaults standardUserDefaults] objectForKey:@"DojoHealth"] intValue];
 }
 
 - (void)onExit
@@ -247,6 +250,9 @@
         case 1:
             // Day 1 Speed Constant
             daySpeedConstant = 1.0f;
+            
+            // Set the Dojo Health to 100
+            [[NSUserDefaults standardUserDefaults] setInteger:100 forKey:@"DojoHealth"];
             
             // Spawn new ninja every 4 - 6 seconds
             [self schedule:@selector(spawnNewNinja) interval:(arc4random() % 3) + 4];

@@ -13,4 +13,7 @@
 // Day Number
 @property (assign, nonatomic) int dayNumber;
 
+// Dojo Health
+@property (assign, nonatomic) int dojoHealth;
+
 @end
