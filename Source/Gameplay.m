@@ -111,21 +111,31 @@
 {
     // CCLOG(@"TouchLocation: %f, %f",touchLocation.x,touchLocation.y);
     
-    // Loop through the ninjas array
+    /* CHECK NINJA ARRAY FOR CASES */
     for (FootNinja *footNinja in _allNinjas)
     {
+        /* CHECKING NINJA POSITIONS */
+        
         // If the ninjas position is above the ground
         if (footNinja.position.y > (screenSize.height * 0.21f))
             // Set ground flag to false
             footNinja.isNinjaOnGround = NO;
         
         // If the ninjas position has passed the dojo
-        if ((footNinja.position.x > (screenSize.width * 0.69f)) && (footNinja.position.y < (screenSize.height * .25f)))
+        if ((footNinja.position.x > (screenSize.width * 0.69f)) && (footNinja.position.y < (screenSize.height * .24f)))
             // Set ninjas position to be in front of dojo
             footNinja.position = ccp(screenSize.width * 0.66f, screenSize.height * 0.20f);
-            
+        
+        
+        /* CHECKING NINJA VELOCITY */
+        
         // If the user is not touching the ninja, and the user isn't grabbing, and the ninja is on the ground
         if (!(CGRectContainsPoint(footNinja.boundingBox, touchLocation)) && !isUserGrabbing && footNinja.isNinjaOnGround)
+            // Apply constant velocity to ninja
+            footNinja.physicsBody.velocity = ccp((footNinja.constantVelocity.x * daySpeedConstant), footNinja.physicsBody.velocity.y);
+        
+        // If the ninja is on the floor and velocity < 0
+        if ((footNinja.position.y < (screenSize.height * .24f))&& (footNinja.physicsBody.velocity.x < 0) && (footNinja.position.x < (screenSize.width * 0.6f)))
             // Apply constant velocity to ninja
             footNinja.physicsBody.velocity = ccp((footNinja.constantVelocity.x * daySpeedConstant), footNinja.physicsBody.velocity.y);
     }
