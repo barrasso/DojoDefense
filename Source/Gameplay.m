@@ -120,9 +120,9 @@
             footNinja.isNinjaOnGround = NO;
         
         // If the ninjas position has passed the dojo
-        if ((footNinja.position.x > (screenSize.width * 0.85f)) && (footNinja.isNinjaOnGround))
+        if ((footNinja.position.x > (screenSize.width * 0.69f)) && (footNinja.position.y < (screenSize.height * .25f)))
             // Set ninjas position to be in front of dojo
-            footNinja.position = ccp(screenSize.width * 0.70f, screenSize.height * 0.20f);
+            footNinja.position = ccp(screenSize.width * 0.66f, screenSize.height * 0.20f);
             
         // If the user is not touching the ninja, and the user isn't grabbing, and the ninja is on the ground
         if (!(CGRectContainsPoint(footNinja.boundingBox, touchLocation)) && !isUserGrabbing && footNinja.isNinjaOnGround)
@@ -221,6 +221,7 @@
 - (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair footninja:(CCNode *)nodeA tower:(CCNode *)nodeB
 {
     // Get kinetic energy of collision
+    CCLOG(@"Ninja Position: (%f, %f)", nodeA.position.x, nodeA.position.y);
 }
 
 // Collision between FOOTNINJA and FLOOR
