@@ -94,6 +94,9 @@
     
     // Get dojo health from NSUser Defaults
     self.dojoHealth = [[[NSUserDefaults standardUserDefaults] objectForKey:@"DojoHealth"] intValue];
+    
+    // Get dojo zen from NSUser Defaults
+    self.dojoZen = [[[NSUserDefaults standardUserDefaults] objectForKey:@"DojoZen"] intValue];
 }
 
 - (void)onExit
@@ -116,6 +119,11 @@
             // Set ground flag to false
             footNinja.isNinjaOnGround = NO;
         
+        // If the ninjas position has passed the dojo
+        if ((footNinja.position.x > (screenSize.width * 0.85f)) && (footNinja.isNinjaOnGround))
+            // Set ninjas position to be in front of dojo
+            footNinja.position = ccp(screenSize.width * 0.70f, screenSize.height * 0.20f);
+            
         // If the user is not touching the ninja, and the user isn't grabbing, and the ninja is on the ground
         if (!(CGRectContainsPoint(footNinja.boundingBox, touchLocation)) && !isUserGrabbing && footNinja.isNinjaOnGround)
             // Apply constant velocity to ninja
@@ -218,13 +226,6 @@
 // Collision between FOOTNINJA and FLOOR
 - (void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair footninja:(CCNode *)nodeA floor:(CCNode *)nodeB
 {
-    // Loop through the ninjas array
-    for (FootNinja *footNinja in _allNinjas)
-    {
-        // Set touching ground flag to true
-        footNinja.isNinjaOnGround = YES;
-    }
-    
     // Get kinetic energy of collision
     float kineticEnergy = [pair totalKineticEnergy];
     
@@ -236,6 +237,13 @@
         
         // Remove the bloody explosion
         [self clearBloodEffects];
+    }
+    
+    // Loop through the ninjas array
+    for (FootNinja *footNinja in _allNinjas)
+    {
+        // Set touching ground flag to true
+        footNinja.isNinjaOnGround = YES;
     }
 }
 
@@ -253,6 +261,9 @@
             
             // Set the Dojo Health to 100
             [[NSUserDefaults standardUserDefaults] setInteger:100 forKey:@"DojoHealth"];
+            
+            // Set the Dojo Zen
+            [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"DojoZen"];
             
             // Spawn new ninja every 4 - 6 seconds
             [self schedule:@selector(spawnNewNinja) interval:(arc4random() % 3) + 4];

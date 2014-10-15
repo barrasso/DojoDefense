@@ -16,4 +16,7 @@
 // Dojo Health
 @property (assign, nonatomic) int dojoHealth;
 
+// Dojo Zen
+@property (assign, nonatomic) int dojoZen;
+
 @end
