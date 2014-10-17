@@ -108,9 +108,7 @@
 #pragma mark - Update method
 
 - (void)update:(CCTime)delta
-{
-    // CCLOG(@"TouchLocation: %f, %f",touchLocation.x,touchLocation.y);
-    
+{    
     /* CHECK NINJA ARRAY FOR CASES */
     for (FootNinja *footNinja in _allNinjas)
     {
